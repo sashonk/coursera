@@ -11,14 +11,6 @@
 
     <artifactId>algorithm.week4</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>edu.princeton.cs</groupId>
-            <artifactId>algs4</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>

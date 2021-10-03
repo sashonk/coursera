@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>algorithm.week1</artifactId>
+    <artifactId>algorithm.week5</artifactId>
 
     <build>
         <plugins>
@@ -18,28 +18,15 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create-hello</id>
+                        <id>create-distribution</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>hello</finalName>
+                            <finalName>kdtree</finalName>
                             <descriptors>
-                                <descriptor>hello.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-percolation</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>percolation</finalName>
-                            <descriptors>
-                                <descriptor>percolation.xml</descriptor>
+                                <descriptor>package.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>
