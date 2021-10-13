@@ -34,6 +34,10 @@ public class KdTree {
             throw new IllegalArgumentException("point is null");
         }
 
+        if (contains(p)) {
+            return;
+        }
+
         root = put(root, p);
     }
 
@@ -158,7 +162,7 @@ public class KdTree {
     // a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D target) {
         if (target == null) {
-            throw new UnsupportedOperationException("point is null");
+            throw new IllegalArgumentException("point is null");
         }
 
         if (isEmpty()) {
