@@ -12,11 +12,25 @@
             height: 600px;
             border: 1px solid black;
         }
+
+        form {
+            display: inline;
+        }
+
+        input {
+            width: 30px;
+        }
+
+        span.spacer {
+            width : 30px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 </body>
 <div id="menu">
+    Graph
     <form id="form" action="/graph">
         <label for="type" ></label>
         <select id="type" name="type" required>
@@ -29,9 +43,13 @@
             <option value="star">star</option>
             <option value="wheel">wheel</option>
         </select>
-       <input type="hidden" name="vertices" value="20">
-        <input type="hidden" name="edges" value="10">
+        Vertices
+       <input type="text" name="vertices" value="20">
+        Edges
+        <input type="text" name="edges" value="10">
     </form>
+    <span class="spacer"></span>
+    Digraph
     <form id="form2" action="/digraph">
         <label for="type2" ></label>
         <select id="type2" name="type" required>
@@ -47,9 +65,14 @@
             <option value="rootedOutTree">rootedOutTree</option>
             <option value="dag">dag</option>
         </select>
-        <input type="hidden" name="vertices" value="20">
-        <input type="hidden" name="edges" value="10">
+        Vertices
+        <input type="text" name="vertices" value="20">
+        Edges
+        <input type="text" name="edges" value="10">
     </form>
+    <span class="spacer"></span>
+    <span>STATUS: </span>
+    <span id="status"></span>
 </div>
 <div id="mynetwork"></div>
 </html>

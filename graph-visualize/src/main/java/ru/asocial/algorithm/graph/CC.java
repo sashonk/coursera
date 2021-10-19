@@ -1,12 +1,6 @@
 package ru.asocial.algorithm.graph;
 
 import edu.princeton.cs.algs4.Graph;
-import edu.princeton.cs.algs4.Stack;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 public class CC {
     private boolean[] marked;
@@ -48,7 +42,7 @@ public class CC {
         t.start();
     }
 
-    Integer getNext() throws InterruptedException {
+    Integer getNext() {
         synchronized (monitor){
             monitor.notify();
             return verticeIndex;

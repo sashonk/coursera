@@ -4,11 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app:'./src/main/js/index.js'
+        app:'./app/index.js'
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'src/main/webapp/public'),
+        path: path.resolve(__dirname, 'build'),
         clean: true
     },
     module: {
@@ -28,8 +28,16 @@ module.exports = {
         })
     ],
     devServer: {
+        proxy: {
+            '/graph': {
+                target: 'http://localhost:6060'
+            },
+            '/digraph': {
+                target: 'http://localhost:6060'
+            },
+        },
         static: {
-            directory: path.resolve(__dirname, 'src/main/webapp/public'),
+            directory: path.resolve(__dirname, 'build'),
         },
         compress: true,
         port: 9000,

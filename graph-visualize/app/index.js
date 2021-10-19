@@ -5,10 +5,15 @@ import {createNetwork} from "./graph";
 console.log("I'm the entry point");
 greet();
 
+const updateStatus = (text) => {
+    $("#status").html(text);
+}
+
 const submitHandler = (url) => function(e) {
     e.preventDefault();
     const $form = $(this);
 
+    updateStatus("running");
     $.ajax({
         url: url,
         type: "POST",
@@ -29,15 +34,17 @@ const submitHandler = (url) => function(e) {
                             }
                             else if (data.complete) {
                                 clearInterval(window.intID);
-                                alert("Complete!");
+                                //alert("Complete!");
+                                updateStatus("Complete");
                             }
                         }
                     })
-                }, 1000);
+                }, 300);
             }
         },
         error : () => {
             alert('errror!!')
+            updateStatus("error");
         }
     })
 };
