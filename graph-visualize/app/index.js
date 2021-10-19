@@ -35,7 +35,7 @@ const submitHandler = (url) => function(e) {
                             else if (data.complete) {
                                 clearInterval(window.intID);
                                 //alert("Complete!");
-                                updateStatus("Complete");
+                                updateStatus("Completed: Acyclic=" + data.acyclic + " Bipartite=" + data.bipartite);
                             }
                         }
                     })
@@ -50,13 +50,7 @@ const submitHandler = (url) => function(e) {
 };
 
 $("#form").submit(submitHandler("/graph"));
-$("#form2").submit(submitHandler("/digraph"));
 $("#type").on("change", () => {
     clearInterval(window.intID);
     $("#form").submit();
-});
-
-$("#type2").on("change", () => {
-    clearInterval(window.intID);
-    $("#form2").submit();
 });

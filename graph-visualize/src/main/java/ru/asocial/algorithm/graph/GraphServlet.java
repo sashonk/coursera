@@ -1,8 +1,6 @@
 package ru.asocial.algorithm.graph;
 
-import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DigraphGenerator;
-import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.GraphGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +22,7 @@ public class GraphServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
-        Graph graph = (Graph) request.getSession().getAttribute(ATTR_GRAPH);
+        IGraphAdapter graph = (IGraphAdapter) request.getSession().getAttribute(ATTR_GRAPH);
         try {
             if (graph != null) {
                 JSONObject json = new JSONObject();
@@ -58,7 +56,7 @@ public class GraphServlet extends HttpServlet {
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
 
-        Graph graph = (Graph) request.getSession().getAttribute(ATTR_GRAPH);
+        IGraphAdapter graph = (IGraphAdapter) request.getSession().getAttribute(ATTR_GRAPH);
         if (graph == null) {
             throw new IllegalArgumentException("create graph first");
         }
@@ -73,6 +71,8 @@ public class GraphServlet extends HttpServlet {
             JSONObject o = new JSONObject();
             if (vertice == null) {
                 o.put("complete", true);
+                o.put("acyclic", cc.isAcylic());
+                o.put("bipartite", cc.isBypartite());
             }
             else {
                 o.put("vertice", vertice + 1);
@@ -87,10 +87,9 @@ public class GraphServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        Graph graph = createGraph(request);
-        request.getSession().setAttribute(ATTR_GRAPH, graph);
-        CC cc = new CC(graph);
-        cc.start();
+        IGraphAdapter graphAdapter = createGraph(request);
+        request.getSession().setAttribute(ATTR_GRAPH, graphAdapter);
+        CC cc = new CC(graphAdapter);
         request.getSession().setAttribute(ATTR_CC, cc);
 
         doGet(request, response);
@@ -101,34 +100,74 @@ public class GraphServlet extends HttpServlet {
         System.out.println("Graph servlet destroy");
     }
 
-    private Graph createGraph(HttpServletRequest request) {
+    private IGraphAdapter createGraph(HttpServletRequest request) {
         String type = request.getParameter("type");
-        int vertices = request.getParameter("vertices") != null ? Integer.parseInt(request.getParameter("vertices")) : 100;
-        int edges = request.getParameter("edges") != null ? Integer.parseInt(request.getParameter("edges")) : 50;
+        int vertices = Integer.parseInt(request.getParameter("vertices"));
+        int edges = Integer.parseInt(request.getParameter("edges"));
         if ("binaryTree".equals(type)) {
-           return GraphGenerator.binaryTree(vertices);
+           return new GraphAdapter(GraphGenerator.binaryTree(vertices));
         }
         else if ("complete".equals(type)) {
-            return GraphGenerator.complete(vertices);
+            return new GraphAdapter(GraphGenerator.complete(vertices));
         }
         else if ("cycle".equals(type)) {
-            return GraphGenerator.cycle(vertices);
+            return new GraphAdapter(GraphGenerator.cycle(vertices));
         }
         else if ("tree".equals(type)) {
-            return GraphGenerator.tree(vertices);
+            return new GraphAdapter(GraphGenerator.tree(vertices));
         }
         else if ("eulerian".equals(type)) {
-            return GraphGenerator.eulerianPath(vertices, edges);
+            return new GraphAdapter(GraphGenerator.eulerianPath(vertices, edges));
         }
         else if ("simple".equals(type)) {
-            return GraphGenerator.simple(vertices, edges);
+            return new GraphAdapter(GraphGenerator.simple(vertices, edges));
         }
         else if ("star".equals(type)) {
-            return GraphGenerator.star(vertices);
+            return new GraphAdapter(GraphGenerator.star(vertices));
         }
         else if ("wheel".equals(type)) {
-            return GraphGenerator.wheel(vertices);
+            return new GraphAdapter(GraphGenerator.wheel(vertices));
         }
-        return GraphGenerator.path(vertices);
+        else if ("path".equals(type)) {
+            return new GraphAdapter(GraphGenerator.path(vertices));
+        }
+        if ("(digraph)binaryTree".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.binaryTree(vertices));
+        }
+        else if ("(digraph)complete".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.complete(vertices));
+        }
+        else if ("(digraph)cycle".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.cycle(vertices));
+        }
+        else if ("(digraph)tournament".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.tournament(vertices));
+        }
+        else if ("(digraph)eulerianPath".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.eulerianPath(vertices, edges));
+        }
+        else if ("(digraph)simple".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.simple(vertices, edges));
+        }
+        else if ("(digraph)rootedInDAG".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.rootedInDAG(vertices, edges));
+        }
+        else if ("(digraph)rootedOutDAG".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.rootedOutDAG(vertices, edges));
+        }
+        else if ("(digraph)rootedInTree".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.rootedInTree(vertices));
+        }
+        else if ("(digraph)rootedOutTree".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.rootedOutTree(vertices));
+        }
+        else if ("(digraph)dag".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.dag(vertices, edges));
+        }
+        else if ("(digraph)path".equals(type)) {
+            return new DigraphAdapter(DigraphGenerator.path(vertices));
+        }
+
+        throw new IllegalArgumentException("graph type required");
     }
 }

@@ -1,62 +1,50 @@
 package ru.asocial.algorithm.graph;
-
-import edu.princeton.cs.algs4.Graph;
+import edu.princeton.cs.algs4.Queue;
 
 public class CC {
-    private boolean[] marked;
-    private int[] id;
+    private final boolean[] marked;
+    private final int[] id;
     private int count;
     private boolean acylic = true;
     private int[] colors;
     private boolean bypartite = true;
-    private Graph graph;
-    private Integer verticeIndex;
-    private final Object monitor = new Object();
+    private final IGraphAdapter graph;
+    private Queue<Integer> result = new Queue<>();
 
-    public CC(Graph G)
+    public boolean isAcylic() {
+        return acylic;
+    }
+
+    public boolean isBypartite() {
+        return bypartite;
+    }
+
+    public CC(IGraphAdapter G)
     {
         this.graph = G;
         marked = new boolean[graph.V()];
         id = new int[graph.V()];
         colors = new int[graph.V()];
-        verticeIndex = null;
-    }
-
-    void start() {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int s = 0; s < graph.V(); s++) {
-                    if (!marked[s]) {
-                        try {
-                            dfs(graph, s, 1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        count++;
-                    }
-                }
+        for (int s = 0; s < graph.V(); s++) {
+            if (!marked[s]) {
+                dfs(graph, s, 1);
+                count++;
             }
-        });
-
-        t.start();
+        }
     }
 
     Integer getNext() {
-        synchronized (monitor){
-            monitor.notify();
-            return verticeIndex;
+        if (!result.isEmpty()) {
+            return result.dequeue();
         }
+        return null;
     }
 
-    private void dfs(Graph G, int v, int color) throws InterruptedException
+    private void dfs(IGraphAdapter G, int v, int color)
     {
         marked[v] = true;
-        synchronized (monitor) {
-            verticeIndex = v;
-            monitor.wait();
-            verticeIndex = null;
-        }
+        System.out.println("marked " + v);
+        result.enqueue(v);
         id[v] = count;
         colors[v] = color;
         int markedCount = 0;
@@ -76,9 +64,7 @@ public class CC {
             }
         }
     }
-    public boolean isBypartite() {
-        return bypartite;
-    }
+
     public boolean connected(int v, int w) {
         return id[v] == id[w];
     }
@@ -87,9 +73,6 @@ public class CC {
     }
     public int count() {
         return count;
-    }
-    public boolean isAcylic() {
-        return acylic;
     }
 
 }

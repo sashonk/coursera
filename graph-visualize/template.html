@@ -32,7 +32,6 @@
 <div id="menu">
     Graph
     <form id="form" action="/graph">
-        <label for="type" ></label>
         <select id="type" name="type" required>
             <option value="binaryTree">binaryTree</option>
             <option value="complete">complete</option>
@@ -42,31 +41,24 @@
             <option value="simple">simple</option>
             <option value="star">star</option>
             <option value="wheel">wheel</option>
+            <option value="path">path</option>
+
+            <option value="(digraph)binaryTree">(digraph)binaryTree</option>
+            <option value="(digraph)complete">(digraph)complete</option>
+            <option value="(digraph)cycle">(digraph)cycle</option>
+            <option value="(digraph)tournament">(digraph)tournament</option>
+            <option value="(digraph)eulerian">(digraph)eulerian</option>
+            <option value="(digraph)simple">(digraph)simple</option>
+            <option value="(digraph)rootedInDAG">(digraph)rootedInDAG</option>
+            <option value="(digraph)rootedOutDAG">(digraph)rootedOutDAG</option>
+            <option value="(digraph)rootedInTree">(digraph)rootedInTree</option>
+            <option value="(digraph)rootedOutTree">(digraph)rootedOutTree</option>
+            <option value="(digraph)dag">(digraph)dag</option>
+            <option value="(digraph)path">(digraph)path</option>
+
         </select>
         Vertices
        <input type="text" name="vertices" value="20">
-        Edges
-        <input type="text" name="edges" value="10">
-    </form>
-    <span class="spacer"></span>
-    Digraph
-    <form id="form2" action="/digraph">
-        <label for="type2" ></label>
-        <select id="type2" name="type" required>
-            <option value="binaryTree">binaryTree</option>
-            <option value="complete">complete</option>
-            <option value="cycle">cycle</option>
-            <option value="tournament">tournament</option>
-            <option value="eulerian">eulerian</option>
-            <option value="simple">simple</option>
-            <option value="rootedInDAG">rootedInDAG</option>
-            <option value="rootedOutDAG">rootedOutDAG</option>
-            <option value="rootedInTree">rootedInTree</option>
-            <option value="rootedOutTree">rootedOutTree</option>
-            <option value="dag">dag</option>
-        </select>
-        Vertices
-        <input type="text" name="vertices" value="20">
         Edges
         <input type="text" name="edges" value="10">
     </form>
