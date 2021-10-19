@@ -14,15 +14,17 @@ const submitHandler = (url) => function(e) {
     const $form = $(this);
 
     updateStatus("running");
+    const formData = $form.serializeArray();
     $.ajax({
         url: url,
         type: "POST",
-        data: $form.serializeArray(),
+        data: formData,
         success: (data) => {
             if (data) {
                 const vertices = data.vertices;
                 const edges = data.edges;
-                const network = createNetwork(vertices, edges);
+                const network = createNetwork(vertices, edges, formData.find((nv) => nv.name === "type").value.indexOf('digraph')>0);
+                clearInterval(window.intID);
                 window.intID = setInterval(() => {
                     $.ajax({
                         url: url,
@@ -51,6 +53,5 @@ const submitHandler = (url) => function(e) {
 
 $("#form").submit(submitHandler("/graph"));
 $("#type").on("change", () => {
-    clearInterval(window.intID);
     $("#form").submit();
 });
