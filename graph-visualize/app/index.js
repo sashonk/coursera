@@ -44,8 +44,9 @@ const submitHandler = (url) => function(e) {
                 }, 300);
             }
         },
-        error : () => {
-            alert('errror!!')
+        error : (err) => {
+            console.error(err);
+            alert(JSON.stringify(err));
             updateStatus("error");
         }
     })
