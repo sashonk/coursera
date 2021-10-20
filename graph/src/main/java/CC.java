@@ -27,14 +27,12 @@ public class CC {
         marked[v] = true;
         id[v] = count;
         colors[v] = color;
-        int markedCount = 0;
         for (int w : G.adj(v))
             if (!marked[w]) {
                 dfs(G, w, color == 1 ? 2 : 1);
             }
             else {
-                markedCount++;
-                if (markedCount >= 2) {
+                if (w == v) {
                     acylic = false;
                 }
 
