@@ -9,7 +9,7 @@ const options = (withArrows = false) => {
                 to: {enabled: withArrows}
             }
         },
-        physics: false
+        physics: true
     }
 };
 
