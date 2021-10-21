@@ -3,6 +3,9 @@ import {Network} from "vis-network";
 
 const options = (withArrows = false) => {
     return {
+        interaction: {
+            multiselect: true
+        },
         edges: {
             color: "#000000",
             arrows: {
