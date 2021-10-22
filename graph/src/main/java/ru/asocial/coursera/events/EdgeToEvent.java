@@ -1,4 +1,4 @@
-package ru.asocial.coursera;
+package ru.asocial.coursera.events;
 
 public class EdgeToEvent implements Event {
     private Integer v;

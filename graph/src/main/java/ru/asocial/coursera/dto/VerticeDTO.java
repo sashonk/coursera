@@ -1,4 +1,4 @@
-package ru.asocial.coursera;
+package ru.asocial.coursera.dto;
 
 public class VerticeDTO {
 

@@ -1,5 +1,6 @@
 import {DataSet} from "vis-data";
 import {Network} from "vis-network";
+import {EDGE_COLOR, NODE_COLOR} from "./ui";
 
 const options = (withArrows = false) => {
     return {
@@ -7,10 +8,13 @@ const options = (withArrows = false) => {
             multiselect: true
         },
         edges: {
-            color: "#000000",
+            color: EDGE_COLOR,
             arrows: {
                 to: {enabled: withArrows}
             }
+        },
+        nodes : {
+            color: NODE_COLOR
         },
         physics: true
     }

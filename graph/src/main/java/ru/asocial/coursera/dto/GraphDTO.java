@@ -1,4 +1,4 @@
-package ru.asocial.coursera;
+package ru.asocial.coursera.dto;
 
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.Graph;
@@ -26,7 +26,7 @@ public class GraphDTO {
         return edges;
     }
 
-    static GraphDTO convert(Graph graph) {
+    public static GraphDTO convert(Graph graph) {
         GraphDTO result = new GraphDTO();
 
         for (int i = 0; i < graph.V(); i++) {
@@ -38,7 +38,7 @@ public class GraphDTO {
         return result;
     }
 
-    static GraphDTO convert(Digraph graph) {
+    public static GraphDTO convert(Digraph graph) {
         GraphDTO result = new GraphDTO();
 
         for (int i = 0; i < graph.V(); i++) {

@@ -1,4 +1,4 @@
-package ru.asocial.coursera;
+package ru.asocial.coursera.events;
 
 import java.util.Iterator;
 import java.util.LinkedList;
