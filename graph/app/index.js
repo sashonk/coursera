@@ -84,6 +84,7 @@ function submitHandler(e) {
     clearPathBtn.hide();
     dfsButton.unbind("click");
     pathToButton.unbind("click");
+    pathToButton.hide();
     const $form = $(this);
     updateStatus("creating graph...");
     const formData = $form.serializeArray();

@@ -16,7 +16,7 @@ const options = (withArrows = false) => {
         nodes : {
             color: NODE_COLOR
         },
-        physics: true
+        physics: false
     }
 };
 
