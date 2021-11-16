@@ -15,7 +15,6 @@
     <module>week4</module>
     <module>week5</module>
     <module>graph</module>
-    <module>graph-visualize</module>
   </modules>
 
   <name>algorithm</name>
